@@ -71,5 +71,6 @@ try {
   });
  
 } catch (error) {
+  console.log ('payload', github.context.payload)
   core.setFailed(error.message);
 }
