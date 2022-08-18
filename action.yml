@@ -1,0 +1,23 @@
+name: 'Github-Confluence Connector'
+description: 'Pipe github messages to Confluence'
+inputs:
+  endpoint:  
+    description: 'endpoint of the confluence api'
+    required: true
+    default: 'miltonejones.atlassian.net'
+  username:  
+    description: 'confluence username'
+    required: true
+  password:  
+    description: 'confluence password'
+    required: true
+  spacekey:  
+    description: 'space to insert the new page'
+    required: true
+    default: 'LAB'
+outputs:
+  message:
+    description: 'Action response message'
+runs:
+  using: 'node16'
+  main: 'index.js'
