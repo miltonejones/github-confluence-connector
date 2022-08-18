@@ -44,14 +44,18 @@ const createConfluencePage = ({ spacekey, pageTitle, pageContent, username, pass
 
 
 try { 
+
+
+  console.log ('payload', github.context.payload)
+
+
+
   const endpoint = core.getInput('endpoint'); 
   const username = core.getInput('username'); 
   const password = core.getInput('password'); 
   const spacekey = core.getInput('spacekey'); 
   const { author, message: pageContent } = github.context.payload.head_commit;
   const pageTitle = `Created by ${author.name}`;
-
-  console.log (github.context.payload)
 
   createConfluencePage({
     pageTitle,
