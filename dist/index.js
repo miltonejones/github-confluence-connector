@@ -119,6 +119,8 @@ try {
   const { author, message: pageContent } = github.context.payload.head_commit;
   const pageTitle = `Created by ${author.name}`;
 
+  console.log (github.context.payload)
+
   createConfluencePage({
     pageTitle,
     pageContent,
