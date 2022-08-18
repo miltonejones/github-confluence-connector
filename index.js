@@ -68,7 +68,6 @@ try {
     core.setOutput("message", 'Page created on ' + time);
   });
  
-} catch (error) {
-  console.log ('payload', github.context.payload)
+} catch (error) { 
   core.setFailed(error.message);
 }

@@ -113,17 +113,16 @@ const createConfluencePage = ({ spacekey, pageTitle, pageContent, username, pass
 
 try { 
 
-
-  console.log ('payload', github.context.payload)
-
-
-
   const endpoint = core.getInput('endpoint'); 
   const username = core.getInput('username'); 
   const password = core.getInput('password'); 
   const spacekey = core.getInput('spacekey'); 
-  const { author, message: pageContent } = github.context.payload.head_commit;
-  const pageTitle = `Created by ${author.name}`;
+  const { payload } = github.context;
+  const { author, message: pageContent } = payload.head_commit;
+  const time = (new Date()).toTimeString();
+  const pageTitle = `Created by ${author.name} on ${time}`;
+
+  console.log ({ payload });
 
   createConfluencePage({
     pageTitle,
@@ -134,11 +133,10 @@ try {
     spacekey,
   }).then(response => {
     console.log ('success', response);
-    const time = (new Date()).toTimeString();
     core.setOutput("message", 'Page created on ' + time);
   });
  
-} catch (error) {
+} catch (error) { 
   core.setFailed(error.message);
 }
 })();
