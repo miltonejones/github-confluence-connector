@@ -50,24 +50,30 @@ try {
   const password = core.getInput('password'); 
   const spacekey = core.getInput('spacekey'); 
   const { payload } = github.context;
-  const { author, message: pageContent } = payload.head_commit;
-  const time = (new Date()).toTimeString();
-  const pageTitle = `Created by ${author.name} on ${time}`;
 
-  console.log ({ payload });
+  core.setOutput("debug", JSON.stringify(github.context, 0, 2));
 
-  createConfluencePage({
-    pageTitle,
-    pageContent,
-    endpoint,
-    username,
-    password,
-    spacekey,
-  }).then(response => {
-    console.log ('success', response);
-    core.setOutput("message", 'Page created on ' + time);
-  });
+  if (payload?.head_commit) {
+    const { author, message: pageContent } = payload.head_commit;
+    const time = new Date().toTimeString();
+    const pageTitle = `Created by ${author.name} on ${time}`;
+  
+    createConfluencePage({
+      pageTitle,
+      pageContent,
+      endpoint,
+      username,
+      password,
+      spacekey,
+    }).then(response => {
+      console.log ('success', response);
+      core.setOutput("message", 'Page created on ' + time);
+    });
+  } else {
+    core.setOutput('Head commit not found. No action taken.');
+  }
  
+
 } catch (error) { 
   core.setFailed(error.message);
 }
